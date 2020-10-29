@@ -1,0 +1,122 @@
+@import './_variables-compact';
+@import './_functions';
+
+$doc-site-breakpoint-classes: false !default;
+
+@mixin breakpoint($min-width: '', $max-width: '') {
+	@if ($min-width == '') {
+		@include breakpoint-max($max-width) {
+			@content;
+		}
+	} @else if ($max-width == '') {
+		@include breakpoint-min($min-width) {
+			@content;
+		}
+	} @else {
+		@include breakpoint-both($min-width, $max-width) {
+			@content;
+		}
+	}
+}
+
+@mixin breakpoint-min($min-width) {
+	@if ($doc-site-breakpoint-classes) {
+		$list: ();
+
+		@each $item in (list-slice($breakpoints, index($breakpoints, $min-width), length($breakpoints))) {
+			$list: append($list, '.doc-site-breakpoint-#{$item}', comma);
+		}
+
+		#{$list} {
+			@content;
+		}
+	} @else {
+		$min-width-calc: breakpoint-value($min-width);
+		@media (min-width: $min-width-calc) {
+			@content;
+		}
+	}
+}
+
+@mixin breakpoint-max($max-width) {
+	@if ($doc-site-breakpoint-classes) {
+		$list: ();
+
+		@each $item in (list-slice($breakpoints, 1, index($breakpoints, $max-width))) {
+			$list: append($list, '.doc-site-breakpoint-#{$item}', comma);
+		}
+
+		#{$list} {
+			@content;
+		}
+	} @else {
+		$max-width-calc: breakpoint-value(#{$max-width}-high);
+		@media (max-width: $max-width-calc) {
+			@content;
+		}
+	}
+}
+
+@mixin breakpoint-both($min-width, $max-width) {
+	@if ($doc-site-breakpoint-classes) {
+		$list: ();
+
+		@each $item in (list-slice($breakpoints, index($breakpoints, $min-width), index($breakpoints, $max-width))) {
+			$list: append($list, '.doc-site-breakpoint-#{$item}', comma);
+		}
+
+		#{$list} {
+			@content;
+		}
+
+	} @else {
+		$min-width-calc: breakpoint-value($min-width);
+		$max-width-calc: breakpoint-values(#{$max-width}-high);
+		@media (min-width: $min-width-calc) and (max-width: $max-width-calc) {
+			@content;
+		}
+	}
+}
+
+@mixin aspect-ratio($width, $height) {
+	position: relative;
+
+	&::before {
+		content: '';
+		display: block;
+		padding-top: ($height / $width) * 100%;
+		width: 100%;
+	}
+
+	> img {
+		bottom: 0;
+		height: 100%;
+		left: 0;
+		max-height: none;
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 100%;
+	}
+}
+
+@mixin autohide-scrollbarx {
+	-ms-overflow-style: -ms-autohiding-scrollbar; // sass-lint:disable-line no-vendor-prefixes
+	overflow-x: auto;
+}
+
+@mixin margin-bottom {
+	margin-bottom: $margin-bottom;
+}
+
+@mixin truncate {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+@mixin focus-style {
+	outline: 2px dotted get-color('neutral', 5);
+	outline-offset: 2px;
+}
+

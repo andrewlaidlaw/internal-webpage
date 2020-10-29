@@ -1,0 +1,55 @@
+// _variables must also be imported for these functions to work
+
+@function px-to-em($px-value) {
+	@return ($px-value / $font-size-px) * 1em;
+}
+
+@function em-to-px($em-value) {
+	@return ($em-value / 1em) * $font-size-px;
+}
+
+@function px-to-rem($px-value) {
+	@return ($px-value / $font-size-px) * 1rem;
+}
+
+@function rem-to-px($rem-value) {
+	@return ($rem-value / 1rem) * $font-size-px;
+}
+
+// Media Query ems are based on browser settings, not anything in html.
+// Convert from px to browser setting ems to construct media queries.
+@function px-to-mq-em($px-value) {
+	@return ($px-value / 16px) * 1em;
+}
+@function em-to-mq-em($em-value) {
+	@if (unitless($em-value)) {
+		@return ($em-value * 19px) / 16;
+	}
+
+	@return ($em-value * 19px) / 16px;
+}
+@function mq-em-to-em($em-value) {
+	@if (unitless($em-value)) {
+		@return ($em-value * 16) / 19px;
+	}
+
+	@return ($em-value * 16px) / 19px;
+}
+
+@function breakpoint-value($breakpoint) {
+	@return map-get($breakpoint-values, $breakpoint);
+}
+
+@function animation-frames($frames) {
+	@return $frames / 30 + s;
+}
+
+@function list-slice($list, $index-start, $index-end, $delimiter: comma) {
+	$new-list: ();
+
+	@for $i from $index-start through $index-end {
+		$new-list: append($new-list, nth($list, $i), $delimiter);
+	}
+
+	@return $new-list;
+}
