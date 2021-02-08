@@ -65,7 +65,12 @@
       integrationID: "5d6d8808-e705-4c39-a74d-9d89b96fe73c", // The ID of this integration.
       region: "eu-gb", // The region your integration is hosted in.
       serviceInstanceID: "60e5f9c2-9282-48d8-bcd9-a44c0408956b", // The ID of your service instance.
-      onLoad: function(instance) { instance.render(); }
+      carbonTheme: 'g90',
+      onLoad: function(instance) { 
+        instance.updateCSSVariables({
+          'BASE-font-family': 'Montserrat'
+        });
+        instance.render(); }
     };
   setTimeout(function(){
     const t=document.createElement('script');
