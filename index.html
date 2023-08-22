@@ -62,18 +62,14 @@
   </body>
 <script>
   window.watsonAssistantChatOptions = {
-      integrationID: "5d6d8808-e705-4c39-a74d-9d89b96fe73c", // The ID of this integration.
-      region: "eu-gb", // The region your integration is hosted in.
-      serviceInstanceID: "60e5f9c2-9282-48d8-bcd9-a44c0408956b", // The ID of your service instance.
-      onLoad: function(instance) { 
-        instance.updateCSSVariables({
-          'BASE-font-family': 'Montserrat'
-        });
-        instance.render(); }
-    };
+    integrationID: "1c209fa8-7910-49bd-8126-a6408a9f6757", // The ID of this integration.
+    region: "eu-gb", // The region your integration is hosted in.
+    serviceInstanceID: "60e5f9c2-9282-48d8-bcd9-a44c0408956b", // The ID of your service instance.
+    onLoad: function(instance) { instance.render(); }
+  };
   setTimeout(function(){
     const t=document.createElement('script');
-    t.src="https://web-chat.global.assistant.watson.appdomain.cloud/loadWatsonAssistantChat.js";
+    t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
     document.head.appendChild(t);
   });
 </script>
